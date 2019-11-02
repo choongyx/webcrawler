@@ -3,24 +3,28 @@ from bs4 import BeautifulSoup
 import json
 
 
+
 def crawl_lazada(keyword):
 
     url = 'https://www.lazada.sg/catalog/?q='+keyword
-    f = open("items.json", "w+")
+    f = open("items.json", "w+", encoding='utf-8')
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     s = soup.find_all('script', limit=4)
     f.write(str(s[3])[24:-9])
     f.close()
-    text = json.load(open("items.json", "r"))
+    text = json.load(open("items.json", "r", encoding='utf-8'))
 
     count = 0
     itemList = []
+    prices = []
     for item in text['mods']['listItems']:
         itemList.append((item['name'], float(item['price']), item['productUrl'][2:]))
-        if count == 20:
+        prices.append(float(item['price']))
+        if count == 40:
             break
         count += 1
+
 
     sorted_itemList = sorted(itemList, key=lambda x: x[1])
 
