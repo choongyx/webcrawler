@@ -1,3 +1,4 @@
+import time
 from concurrent.futures import ThreadPoolExecutor
 
 from crawllazada import crawl_lazada
@@ -25,6 +26,7 @@ class ParallelWebCrawler:
 
     def sort_and_print_results(self):
         self.pool.shutdown()
+        time.sleep(60)
 
         sorted_result = sorted(self.result, key=lambda x: x[1])
 

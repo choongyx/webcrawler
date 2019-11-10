@@ -38,6 +38,7 @@ def crawl_qoo10(keyword, num):
         price = item.select('.prc')
         price = str(price).split('strong>')[1][:-2]
         price = price[2:]
+        price = price.replace(',', '')
 
         finalitemlist.append((title, float(price), link))
         count += 1
