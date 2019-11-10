@@ -8,7 +8,7 @@ headers = {
 }
 
 
-def crawl_qoo10(keyword):
+def crawl_qoo10(keyword, num):
     url = 'https://www.qoo10.sg/s/' + keyword + '?keyword=' + keyword + '&keyword_auto_change='
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -39,11 +39,11 @@ def crawl_qoo10(keyword):
         price = str(price).split('strong>')[1][:-2]
         price = price[2:]
 
-        finalitemlist.append((link, float(price), title))
+        finalitemlist.append((title, float(price), link))
         count += 1
 
-        if count == 20:
-                break
+        if count == num:
+            break
 
 
     sorted_itemList = sorted(finalitemlist, key=lambda x: x[1])
