@@ -4,7 +4,7 @@ import json
 
 
 
-def crawl_lazada(keyword):
+def crawl_lazada(keyword, num):
 
     url = 'https://www.lazada.sg/catalog/?q='+keyword
     f = open("items.json", "w+", encoding='utf-8')
@@ -21,14 +21,14 @@ def crawl_lazada(keyword):
     for item in text['mods']['listItems']:
         itemList.append((item['name'], float(item['price']), item['productUrl'][2:]))
         prices.append(float(item['price']))
-        if count == 40:
+        if count == num - 1:
             break
         count += 1
 
 
     sorted_itemList = sorted(itemList, key=lambda x: x[1])
 
-    return sorted_itemList[10:]
+    return sorted_itemList
 
 if __name__ == "__main__": 
     keyword = 'iphone'
