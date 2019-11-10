@@ -1,10 +1,4 @@
-import time
-import requests
-from requests.exceptions import RequestException
 from concurrent.futures import ThreadPoolExecutor
-from queue import Queue, Empty
-from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse
 
 from crawllazada import crawl_lazada
 from crawlqoo10 import crawl_qoo10
