@@ -4,7 +4,7 @@ import json
 
 
 
-def crawl_lazada(keyword, num):
+def crawl_lazada(keyword, num=10):
 
     url = 'https://www.lazada.sg/catalog/?q='+keyword
     f = open("items.json", "w+", encoding='utf-8')

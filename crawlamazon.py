@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-from lxml import html
 
 
 def split(word):
@@ -9,9 +8,7 @@ def split(word):
 def trim_word(word, from_start=0, from_end=0):
     return word[from_start:len(word) - from_end]
 
-def crawl_amazon(keyword):
-
-
+def crawl_amazon(keyword, num=10):
   url = 'https://www.amazon.sg/s?k=' + keyword + '&ref=nb_sb_noss'
 
   page = requests.get(url)
@@ -22,7 +19,11 @@ def crawl_amazon(keyword):
   listings = soup.find_all(class_="sg-col-20-of-24 s-result-item sg-col-0-of-12 sg-col-28-of-32 sg-col-16-of-20 sg-col sg-col-32-of-36 sg-col-12-of-16 sg-col-24-of-28")
   listingsLength = len(listings)
 
-  for x in range(listingsLength - 1):
+  count = 0
+
+  for x in range(listingsLength):
+      if count == num:
+        break
 
       if type((listings[x].find(class_='a-price', attrs = {'data-a-color':'base'}))) is not type(None):
           name = ((listings[x].find(class_='a-size-medium a-color-base a-text-normal')).get_text())
@@ -33,14 +34,11 @@ def crawl_amazon(keyword):
               link = 'https://www.amazon.sg' + a['href']
 
           finalList.append((name, price, link))
+          count += 1
 
   sortedFinalList = sorted(finalList, key=lambda x: x[1])
 
   return sortedFinalList;
-  #section for printing html page
-  #f = open("results.txt","w+")
-  #f.write((page.text).encode(encoding='utf8'))
-  #f.close()
 
 
 if __name__ == "__main__":

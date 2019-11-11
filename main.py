@@ -3,20 +3,20 @@ from concurrent.futures import ThreadPoolExecutor
 
 from crawllazada import crawl_lazada
 from crawlqoo10 import crawl_qoo10
+from crawlamazon import crawl_amazon
 
 class ParallelWebCrawler:
     def __init__(self):
         # Create a pool of workers to run crawlers in parallel
         self.pool = ThreadPoolExecutor(max_workers=3)
+        self.crawlers = [crawl_lazada, crawl_qoo10, crawl_amazon]
         self.result = []
 
     # Run multiple crawlers in parallel
     def run_crawlers(self, keyword, num):
-        job_1 = self.pool.submit(crawl_lazada, keyword, num)
-        job_1.add_done_callback(self.crawler_callback)
-
-        job_2 = self.pool.submit(crawl_qoo10, keyword, num)
-        job_2.add_done_callback(self.crawler_callback)
+        for crawler in self.crawlers:
+            job = self.pool.submit(crawler, keyword, num)
+            job.add_done_callback(self.crawler_callback)
 
         self.sort_and_print_results()
 

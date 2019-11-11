@@ -8,7 +8,7 @@ headers = {
 }
 
 
-def crawl_qoo10(keyword, num):
+def crawl_qoo10(keyword, num=10):
     url = 'https://www.qoo10.sg/s/' + keyword + '?keyword=' + keyword + '&keyword_auto_change='
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
