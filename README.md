@@ -2,7 +2,7 @@
 
 1. Install all the required packages:
    - `pip install requests` 
-   - `pip install bs4` 
+   - `pip install 'beautifulsoup4==4.8.1'` 
    - `pip install json` 
    - `pip install parsel`
 2. Run the program with the command `python main.py`.
